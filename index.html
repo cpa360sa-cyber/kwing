@@ -1,0 +1,487 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>KWING · WhatsApp orders for kasi businesses</title>
+<meta name="description" content="KWING gives kasi takeaways, spazas and local shops a till, a live kitchen board and a WhatsApp bot that takes orders for you.">
+<meta property="og:title" content="KWING · Your shop takes orders on WhatsApp">
+<meta property="og:description" content="Till, kitchen board and a WhatsApp ordering bot for kasi takeaways, spazas and local shops.">
+<meta property="og:image" content="https://images.unsplash.com/photo-1687422808311-a776f467a468?auto=format&fit=crop&w=1200&h=630&q=80">
+<meta name="theme-color" content="#0D5A42">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://images.unsplash.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Figtree:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: hand-painted kasi shop-sign look. Full-bleed photo hero with a live WhatsApp chat + kitchen ticket,
+   a "built for" photo wall, a 4-step ticket strip, product snippets, a photo band, pricing, FAQ, sign-off. */
+:root{
+  --paper:#F4F1E8; --surface:#FFFFFF; --ink:#13201B; --muted:#56655D; --line:#D9DDD3;
+  --green:#0D5A42; --green-deep:#083D2D; --on-green:#FFFFFF;
+  --mustard:#F2B705; --on-mustard:#1D1600; --chili:#C93A25; --ok:#1F8A4C;
+  --wa-bg:#E9E2D6; --wa-in:#FFFFFF; --wa-out:#D3F4C1; --wa-bar:#0B6152; --wa-ink:#111B21;
+  --scrim:rgba(8,20,15,.62);
+  --f-display:"Anton","Impact","Arial Narrow",sans-serif;
+  --f-body:"Figtree",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+  --r:12px; --wrap:1180px;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#0E1613; --surface:#16211D; --ink:#E8EFEA; --muted:#9AAAA1; --line:#2A3A33;
+  --green:#2FA77B; --green-deep:#0B2A20; --on-green:#05140E;
+  --mustard:#F5C430; --on-mustard:#1D1600; --chili:#EF6A52; --ok:#4CC27F;
+  --wa-bg:#0B141A; --wa-in:#202C33; --wa-out:#005C4B; --wa-bar:#1F2C34; --wa-ink:#E9EDEF;
+  --scrim:rgba(3,10,7,.7);
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#0E1613; --surface:#16211D; --ink:#E8EFEA; --muted:#9AAAA1; --line:#2A3A33;
+  --green:#2FA77B; --green-deep:#0B2A20; --on-green:#05140E;
+  --mustard:#F5C430; --on-mustard:#1D1600; --chili:#EF6A52; --ok:#4CC27F;
+  --wa-bg:#0B141A; --wa-in:#202C33; --wa-out:#005C4B; --wa-bar:#1F2C34; --wa-ink:#E9EDEF;
+  --scrim:rgba(3,10,7,.7);
+  color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.55;
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+img{max-width:100%;display:block}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--mustard);outline-offset:3px}
+.wrap{max-width:var(--wrap);margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--f-display);font-weight:400;text-transform:uppercase;letter-spacing:.5px;line-height:1.02;margin:0;text-wrap:balance}
+p{margin:0}
+.sign{background:var(--mustard);color:var(--on-mustard);padding:0 .16em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.eyebrow{font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--green)}
+.num{font-variant-numeric:tabular-nums}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;gap:10px;font-weight:800;font-size:16px;text-decoration:none;border-radius:999px;padding:14px 22px;border:2px solid transparent;transition:transform .12s ease, box-shadow .12s ease}
+.btn:hover{transform:translateY(-2px)}
+.btn-wa{background:#25D366;color:#062B14;box-shadow:0 6px 0 #128C47}
+.btn-wa:hover{box-shadow:0 8px 0 #128C47}
+.btn-ghost{border-color:currentColor;color:inherit}
+.btn svg{width:20px;height:20px;flex:none}
+
+/* Nav */
+.nav{position:absolute;inset:env(safe-area-inset-top,0px) 0 auto;z-index:4}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:18px}
+.logo{font-family:var(--f-display);font-size:30px;letter-spacing:1px;color:#fff;text-decoration:none;line-height:1}
+.logo span{background:var(--mustard);color:var(--on-mustard);padding:0 5px;margin-left:1px}
+.nav-links{display:flex;gap:22px;align-items:center;color:#fff;font-weight:700;font-size:15px}
+.nav-links a{text-decoration:none;opacity:.9}
+.nav-links a:hover{opacity:1;text-decoration:underline}
+.nav .btn{padding:10px 16px;font-size:14px;box-shadow:0 4px 0 #128C47}
+
+/* Hero */
+.hero{position:relative;min-height:min(860px,100svh);display:flex;align-items:flex-end;color:#fff;overflow:hidden;background:#13201B}
+.hero-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:30% 30%}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(8,20,15,.88) 0%,rgba(8,20,15,.6) 45%,rgba(8,20,15,.15) 100%),linear-gradient(0deg,rgba(8,20,15,.75),transparent 45%)}
+.hero .wrap{position:relative;z-index:2;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:40px;align-items:end;padding-block:104px 48px;width:100%}
+.hero h1{font-size:clamp(44px,min(6.2vw,9.5svh),88px);color:#fff}
+.hero h1 .sign{display:inline;line-height:1.12}
+.hero-copy{display:flex;flex-direction:column;gap:22px;max-width:640px}
+.hero-copy p{font-size:clamp(18px,1.6vw,21px);color:#E7EEE9;max-width:52ch}
+.hero-cta{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.hero-cta .btn-ghost{color:#fff}
+.hero-proof{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:14px;color:#CFDAD3;font-weight:600}
+.hero-proof span::before{content:"✓ ";color:var(--mustard);font-weight:800}
+
+/* WhatsApp phone + ticket */
+.demo{position:relative;justify-self:end;width:100%;max-width:380px}
+.phone{background:var(--wa-bg);color:var(--wa-ink);border-radius:30px;border:9px solid #0A0F0D;box-shadow:0 30px 60px rgba(0,0,0,.45);overflow:hidden}
+.wa-head{background:var(--wa-bar);color:#fff;display:flex;gap:10px;align-items:center;padding:11px 14px}
+.wa-av{width:36px;height:36px;border-radius:50%;background:var(--mustard);color:var(--on-mustard);display:grid;place-items:center;font-family:var(--f-display);font-size:13px;letter-spacing:.5px}
+.wa-head b{display:block;font-size:15px;line-height:1.2}
+.wa-head small{font-size:12px;opacity:.85}
+.wa-msgs{display:flex;flex-direction:column;gap:7px;padding:14px 11px 16px;font-size:14px;line-height:1.4}
+.bub{max-width:86%;padding:7px 10px 17px;border-radius:9px;position:relative;box-shadow:0 1px 0 rgba(0,0,0,.08);animation:pop .4s ease backwards}
+.bub.in{background:var(--wa-in);align-self:flex-start;border-top-left-radius:2px}
+.bub.out{background:var(--wa-out);align-self:flex-end;border-top-right-radius:2px}
+.bub time{position:absolute;right:8px;bottom:3px;font-size:10px;opacity:.6}
+.bub:nth-child(2){animation-delay:.5s}.bub:nth-child(3){animation-delay:1.1s}.bub:nth-child(4){animation-delay:1.7s}
+@keyframes pop{from{opacity:0;transform:translateY(8px) scale(.97)}}
+.ticket{position:absolute;left:-150px;bottom:-26px;width:230px;background:var(--surface);color:var(--ink);border-radius:8px;border-top:6px solid var(--chili);box-shadow:0 18px 40px rgba(0,0,0,.4);padding:12px 14px;font-size:13px;transform:rotate(-4deg);animation:drop .6s ease 2.3s backwards}
+@keyframes drop{from{opacity:0;transform:rotate(-4deg) translateY(-14px)}}
+.ticket .t-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.ticket .t-num{font-family:var(--f-mono);font-weight:700;font-size:16px}
+.chip-wa{font-size:10px;font-weight:800;letter-spacing:.05em;background:var(--wa-bar);color:#fff;border-radius:999px;padding:2px 8px}
+.ticket ul{list-style:none;margin:0 0 6px;padding:0;font-family:var(--f-mono);font-size:12.5px}
+.ticket .t-meta{color:var(--muted);font-size:11.5px}
+.ticket .t-btn{margin-top:8px;background:var(--mustard);color:var(--on-mustard);text-align:center;font-weight:800;border-radius:6px;padding:6px;font-size:12px}
+
+/* Sections */
+section{padding-block:clamp(64px,9vw,112px)}
+.sec-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.8fr);gap:24px 48px;align-items:end;margin-bottom:40px}
+.sec-head h2{font-size:clamp(36px,5vw,64px)}
+.sec-head p{color:var(--muted);font-size:18px;max-width:52ch}
+
+/* Built for: photo wall */
+.wall{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));grid-auto-rows:160px;gap:12px}
+.tile{position:relative;border-radius:var(--r);overflow:hidden;background:var(--green-deep);margin:0}
+.tile img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+.tile:hover img{transform:scale(1.04)}
+.tile figcaption{position:absolute;left:12px;bottom:12px;right:12px;display:flex;flex-direction:column;align-items:flex-start;gap:6px}
+.tile figcaption b{font-family:var(--f-display);font-weight:400;text-transform:uppercase;font-size:clamp(20px,2.2vw,28px);background:var(--mustard);color:var(--on-mustard);padding:2px 8px;line-height:1.1}
+.tile figcaption span{background:var(--scrim);color:#fff;font-size:13px;font-weight:600;padding:3px 8px;border-radius:4px;max-width:100%}
+.t1{grid-column:span 5;grid-row:span 3}
+.t2{grid-column:span 4;grid-row:span 2}
+.t3{grid-column:span 3;grid-row:span 2}
+.t4{grid-column:span 7;grid-row:span 1}
+
+/* How it works: ticket strip */
+.how{background:var(--green-deep);color:#fff}
+.how .eyebrow{color:var(--mustard)}
+.how .sec-head p{color:#C5D3CB}
+.steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;list-style:none;margin:0;padding:0;counter-reset:step}
+.step{background:#fff;color:#13201B;border-radius:10px;padding:22px 20px 20px;position:relative;display:flex;flex-direction:column;gap:10px;counter-increment:step;
+  -webkit-mask:radial-gradient(circle 9px at 0 50%,transparent 98%,#000) left/51% 100% no-repeat,radial-gradient(circle 9px at 100% 50%,transparent 98%,#000) right/51% 100% no-repeat;
+          mask:radial-gradient(circle 9px at 0 50%,transparent 98%,#000) left/51% 100% no-repeat,radial-gradient(circle 9px at 100% 50%,transparent 98%,#000) right/51% 100% no-repeat}
+.step::before{content:counter(step);font-family:var(--f-display);font-size:54px;line-height:1;color:#0D5A42}
+.step h3{font-size:22px}
+.step p{font-size:15px;color:#4A5952}
+.step .quote{font-family:var(--f-mono);font-size:12.5px;background:#F1F4EF;border-left:3px solid #F2B705;padding:6px 8px;color:#13201B}
+
+/* Product snippets */
+.feats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.feat{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:22px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.feat h3{font-size:24px}
+.feat p{color:var(--muted);font-size:15.5px}
+.snip{background:var(--paper);border:1px dashed var(--line);border-radius:10px;padding:12px;font-size:13px;display:flex;flex-direction:column;gap:8px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.mono{font-family:var(--f-mono);font-weight:700}
+.pill{font-size:11px;font-weight:800;border-radius:999px;padding:3px 10px;border:1px solid var(--line);background:var(--surface)}
+.pill.out{background:var(--chili);color:#fff;border-color:transparent}
+.bar{height:10px;border-radius:3px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--green)}
+.bar i.wa{background:var(--wa-bar)}
+.cols3{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.mini{background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--chili);border-radius:5px;padding:5px 6px;font-size:11px;font-family:var(--f-mono)}
+.mini.c{border-top-color:#B87900}.mini.r{border-top-color:var(--ok)}
+
+/* Photo band */
+.band{position:relative;color:#fff;padding:0;background:#13201B}
+.band-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+.band img{width:100%;height:100%;object-fit:cover;min-height:440px}
+.band-copy{background:var(--green);color:var(--on-green);display:flex;flex-direction:column;justify-content:center;gap:18px;padding:clamp(32px,6vw,80px)}
+.band-copy h2{font-size:clamp(34px,4.4vw,58px)}
+.band-copy ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px;font-weight:600}
+.band-copy li{display:flex;gap:10px}
+.band-copy li::before{content:"";flex:none;width:10px;height:10px;margin-top:8px;background:var(--mustard)}
+
+/* Pricing */
+.price-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:20px;align-items:stretch}
+.price-card{background:var(--surface);border:2px solid var(--ink);border-radius:var(--r);padding:28px;display:flex;flex-direction:column;gap:18px}
+.price-card h3{font-size:32px}
+.price-card ul{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 20px;font-size:15.5px}
+.price-card li{display:flex;gap:8px}
+.price-card li::before{content:"✓";color:var(--green);font-weight:800}
+.price-side{background:var(--mustard);color:var(--on-mustard);border-radius:var(--r);padding:28px;display:flex;flex-direction:column;gap:14px;justify-content:space-between}
+.price-side h3{font-size:30px}
+.price-side p{font-size:16px}
+.costs{display:flex;flex-direction:column;gap:8px;font-size:14.5px;border-top:2px solid var(--on-mustard);padding-top:14px}
+
+/* FAQ */
+.faq{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+details{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px}
+summary{cursor:pointer;font-weight:800;font-size:16.5px;list-style:none;display:flex;justify-content:space-between;gap:12px}
+summary::after{content:"+";font-family:var(--f-display);font-size:22px;line-height:1;color:var(--green)}
+details[open] summary::after{content:"–"}
+summary::-webkit-details-marker{display:none}
+details p{margin-top:10px;color:var(--muted);font-size:15.5px}
+
+/* Final CTA + footer */
+.final{position:relative;color:#fff;text-align:left;overflow:hidden;background:#13201B}
+.final img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 40%}
+.final::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(8,20,15,.9),rgba(8,20,15,.55))}
+.final .wrap{position:relative;z-index:1;display:flex;flex-direction:column;gap:22px;align-items:flex-start}
+.final h2{font-size:clamp(40px,6.4vw,88px);max-width:14ch}
+.final p{font-size:19px;color:#E1EAE4;max-width:48ch}
+footer{padding-block:28px;font-size:13px;color:var(--muted);border-top:1px solid var(--line)}
+footer .wrap{display:flex;flex-wrap:wrap;gap:10px 24px;justify-content:space-between}
+footer a{color:var(--muted)}
+
+@media (max-width:980px){
+  .hero .wrap{grid-template-columns:minmax(0,1fr);padding-top:100px}
+  .demo{justify-self:start;max-width:340px;margin-left:110px}
+  .ticket{left:-110px;width:200px}
+  .sec-head{grid-template-columns:minmax(0,1fr)}
+  .steps{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .feats{grid-template-columns:minmax(0,1fr)}
+  .band-grid,.price-grid,.faq{grid-template-columns:minmax(0,1fr)}
+  .band img{min-height:320px;max-height:420px}
+  .wall{grid-template-columns:repeat(6,minmax(0,1fr));grid-auto-rows:150px}
+  .t1{grid-column:span 6;grid-row:span 2}.t2,.t3{grid-column:span 3;grid-row:span 2}.t4{grid-column:span 6;grid-row:span 1}
+  .nav-links a{display:none}
+}
+@media (max-width:560px){
+  body{font-size:16px}
+  .demo{margin-left:0;max-width:100%}
+  .ticket{position:relative;left:auto;bottom:auto;width:auto;margin:-40px 18px 0;transform:rotate(-2deg)}
+  @keyframes drop{from{opacity:0;transform:rotate(-2deg) translateY(-14px)}}
+  .wa-msgs{min-height:0}
+  .steps{grid-template-columns:minmax(0,1fr)}
+  .wall{grid-template-columns:minmax(0,1fr);grid-auto-rows:220px}
+  .t1,.t2,.t3,.t4{grid-column:auto;grid-row:auto}
+  .price-card ul{grid-template-columns:minmax(0,1fr)}
+  .hero-cta .btn{width:100%;justify-content:center}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="KWING home">KW<span>ING</span></a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="#how">How it works</a>
+      <a href="#features">What you get</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">Questions</a>
+      <a class="btn btn-wa wa-link" href="#contact" data-msg="Hi! I'd like to know more about KWING for my shop.">Get KWING</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+<!-- HERO -->
+<section class="hero" aria-labelledby="hero-title" style="padding:0">
+  <img class="hero-photo" src="https://images.unsplash.com/photo-1687422808311-a776f467a468?auto=format&fit=crop&w=2000&q=80" srcset="https://images.unsplash.com/photo-1687422808311-a776f467a468?auto=format&fit=crop&w=900&q=75 900w, https://images.unsplash.com/photo-1687422808311-a776f467a468?auto=format&fit=crop&w=1600&q=80 1600w, https://images.unsplash.com/photo-1687422808311-a776f467a468?auto=format&fit=crop&w=2400&q=80 2400w" sizes="100vw" alt="A smiling shop owner behind the counter of her small, well-stocked shop" fetchpriority="high">
+  <div class="wrap">
+    <div class="hero-copy">
+      <p class="eyebrow" style="color:var(--mustard)">For kasi takeaways, spazas &amp; local shops</p>
+      <h1 id="hero-title">Your shop takes orders on <span class="sign">WhatsApp</span>. Even while you cook.</h1>
+      <p>KWING is a till, a live kitchen board and a WhatsApp bot that chats to your customers, takes their order, adds up the total in rand, and tells them when it's ready.</p>
+      <div class="hero-cta">
+        <a class="btn btn-wa wa-link" href="#contact" data-msg="Hi! I'd like KWING for my shop.">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.1.6a2.6 2.6 0 0 0 1.7-1.2 2.1 2.1 0 0 0 .2-1.2c-.1-.1-.3-.2-.5-.3Z"/></svg>
+          Get KWING for your shop</a>
+        <a class="btn btn-ghost" href="#how">See how it works</a>
+      </div>
+      <div class="hero-proof"><span>No new hardware</span><span>Works on your phone or tablet</span><span>Prices in rand</span></div>
+    </div>
+
+    <div class="demo" aria-label="Example: a customer orders on WhatsApp and the order lands on the kitchen board">
+      <div class="phone">
+        <div class="wa-head"><div class="wa-av">KW</div><div><b>KWING Kitchen</b><small>Business account</small></div></div>
+        <div class="wa-msgs">
+          <div class="bub out">Eita! 2 Russian kotas and a Coke, I'll collect. It's Sipho<time>12:41</time></div>
+          <div class="bub in">Sho Sipho! 🍔<br>2× Russian Kota · R80<br>1× Coke 500ml · R18<br><b>Total R98</b>, collect at the counter.<br>Shall I place it?<time>12:41</time></div>
+          <div class="bub out">Yebo 👍<time>12:42</time></div>
+          <div class="bub in">Sharp! Order <b>#1043</b> is in the kitchen. We'll WhatsApp you when it's ready.<time>12:42</time></div>
+        </div>
+      </div>
+      <div class="ticket" aria-hidden="true">
+        <div class="t-top"><span class="t-num">#1043</span><span class="chip-wa">WHATSAPP</span></div>
+        <ul><li>2× Russian Kota</li><li>1× Coke 500ml</li></ul>
+        <div class="t-meta">Sipho · Collect · R98 · cash on collection</div>
+        <div class="t-btn">Start cooking</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BUILT FOR -->
+<section aria-labelledby="built-title">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="eyebrow">Built for the businesses on your street</p><h2 id="built-title">If customers can WhatsApp you, <span class="sign">KWING</span> can serve them.</h2></div>
+      <p>Most kasi customers already order by WhatsApp: a voice note here, a "you open?" there. KWING turns those chats into proper orders, so nothing gets lost while you're busy behind the counter.</p>
+    </div>
+    <div class="wall">
+      <figure class="tile t1"><img loading="lazy" src="https://images.unsplash.com/photo-1752154424142-86c9c633cec1?auto=format&fit=crop&w=1100&q=78" alt="Boerewors and meat cooking over coals on an outdoor braai grill"><figcaption><b>Shisanyama</b><span>Plates, wors and platters, pre-ordered so the queue moves</span></figcaption></figure>
+      <figure class="tile t2"><img loading="lazy" src="https://images.unsplash.com/photo-1698827623494-c4e1196ba0ca?auto=format&fit=crop&w=900&q=78" alt="A cook in a chef's hat smiling while she stirs pots in a kitchen"><figcaption><b>Kota &amp; bunny spots</b><span>Orders arrive while you cook</span></figcaption></figure>
+      <figure class="tile t3"><img loading="lazy" src="https://images.unsplash.com/photo-1687422809654-579d81c29d32?auto=format&fit=crop&w=700&q=78" alt="A street vendor in a headscarf smiling at her phone beside her fruit stall"><figcaption><b>Stalls</b><span>Your menu, on their phone</span></figcaption></figure>
+      <figure class="tile t4"><img loading="lazy" src="https://images.unsplash.com/photo-1662210819678-42791e8255a9?auto=format&fit=crop&w=1400&h=500&q=78" alt="A container shop in Langa township painted with signs for a salon and a barber shop"><figcaption><b>Spazas, salons &amp; more</b><span>Langa, Cape Town · any shop with a menu or price list</span></figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how" id="how" aria-labelledby="how-title">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="eyebrow">How it works</p><h2 id="how-title">From "Eita" to "it's ready" in four taps.</h2></div>
+      <p>The bot does the typing. You do the cooking. Counter orders from the till land on the same board.</p>
+    </div>
+    <ol class="steps">
+      <li class="step"><h3>Customer WhatsApps you</h3><p>In English, isiZulu, Sesotho or slang. The bot only offers what's on your menu today.</p><span class="quote">"2 Russian kotas and a Coke"</span></li>
+      <li class="step"><h3>The bot confirms the order</h3><p>It reads back every item and the total in rand, and only places the order after the customer says yes.</p><span class="quote">"Total R98. Shall I place it?"</span></li>
+      <li class="step"><h3>It pops up in the kitchen</h3><p>The ticket appears on your kitchen board straight away, with a green WhatsApp badge and the delivery address if there is one.</p><span class="quote">#1043 · New</span></li>
+      <li class="step"><h3>Tap "Ready"</h3><p>The customer gets a WhatsApp message to come and fetch it, or that it's on the way.</p><span class="quote">"Sho Sipho! Your order is ready"</span></li>
+    </ol>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features" aria-labelledby="feat-title">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="eyebrow">What you get</p><h2 id="feat-title">One system for the counter, the kitchen and WhatsApp.</h2></div>
+      <p>Open KWING in the browser on the phone or tablet you already have. Your staff sign in with their own email and password.</p>
+    </div>
+    <div class="feats">
+      <article class="feat">
+        <h3>Till</h3>
+        <p>Tap items to ring up walk-ins. Cash, card or EFT, change worked out for you, and delivery adds your fee on its own.</p>
+        <div class="snip" aria-hidden="true">
+          <div class="row"><span>2× Russian Kota</span><span class="mono num">R80</span></div>
+          <div class="row"><span>1× Chips</span><span class="mono num">R20</span></div>
+          <div class="row" style="border-top:1px dashed var(--line);padding-top:6px"><b>Total</b><span class="mono num" style="font-size:16px">R100</span></div>
+          <div class="row"><span>Cash R200</span><span class="mono num" style="color:var(--ok)">Change R100</span></div>
+        </div>
+      </article>
+      <article class="feat">
+        <h3>Kitchen board</h3>
+        <p>New, cooking, ready. Every order from the till and WhatsApp in one place, updating live. Late tickets get flagged after 20 minutes.</p>
+        <div class="snip" aria-hidden="true">
+          <div class="cols3"><div class="mini">#1043<br>New</div><div class="mini c">#1041<br>Cooking</div><div class="mini r">#1039<br>Ready</div></div>
+          <div class="cols3"><div class="mini">#1044<br>New</div><div class="mini c">#1042<br>Cooking</div><div class="mini r">#1040<br>Ready</div></div>
+        </div>
+      </article>
+      <article class="feat">
+        <h3>Sold out? One tap.</h3>
+        <p>Mark an item sold out and the WhatsApp bot stops offering it immediately. Change prices whenever you like.</p>
+        <div class="snip" aria-hidden="true">
+          <div class="row"><span>Full House Kota · <span class="mono">R55</span></span><span class="pill">In stock</span></div>
+          <div class="row"><span>Mutton Bunny · <span class="mono">R85</span></span><span class="pill out">Sold out</span></div>
+          <div class="row"><span>Pap &amp; Wors · <span class="mono">R45</span></span><span class="pill">In stock</span></div>
+        </div>
+      </article>
+      <article class="feat">
+        <h3>Today's sales</h3>
+        <p>Takings by counter and WhatsApp, paid and still to pay, and what's selling best. No more counting tickets at closing.</p>
+        <div class="snip" aria-hidden="true">
+          <div class="row"><span>Counter</span><span class="mono num">R2 340</span></div><div class="bar"><i style="width:64%"></i></div>
+          <div class="row"><span>WhatsApp</span><span class="mono num">R1 310</span></div><div class="bar"><i class="wa" style="width:36%"></i></div>
+        </div>
+      </article>
+      <article class="feat">
+        <h3>"Your order is ready"</h3>
+        <p>Add a customer's number at the till and they get the same WhatsApp ping as bot orders. No more shouting names across the shop.</p>
+        <div class="snip" aria-hidden="true"><div class="row"><span>#1043 · Sipho</span><span class="pill" style="background:var(--wa-bar);color:#fff;border-color:transparent">Sent on WhatsApp</span></div></div>
+      </article>
+      <article class="feat">
+        <h3>Your shop, your look</h3>
+        <p>Your name, your colours and your menu. The bot talks in your shop's voice, whether that's kasi slang or polite and simple.</p>
+        <div class="snip" aria-hidden="true"><div class="row"><span style="font-family:var(--f-display);font-size:22px;letter-spacing:.5px">MAMA'S <span class="sign">GRILL</span></span><span class="pill">Your brand</span></div></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- PHOTO BAND -->
+<section class="band" aria-labelledby="band-title">
+  <div class="band-grid">
+    <img loading="lazy" src="https://images.unsplash.com/photo-1687422808248-f807f4ea2a2e?auto=format&fit=crop&w=1400&q=78" alt="A vendor in a blue apron checking orders on his phone at his food counter">
+    <div class="band-copy">
+      <p class="eyebrow" style="color:var(--mustard)">No new hardware</p>
+      <h2 id="band-title">Runs on the phone already in your pocket.</h2>
+      <ul>
+        <li>Works in the browser on any smartphone, tablet or laptop</li>
+        <li>Your WhatsApp number answers customers day and night</li>
+        <li>Each staff member gets their own sign-in</li>
+        <li>Your customers' details stay in your own database</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" aria-labelledby="price-title">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="eyebrow">Pricing</p><h2 id="price-title">A once-off setup, then a monthly fee.</h2></div>
+      <p>Every shop is different, so we give you a quote after a quick chat. You'll know exactly what you pay before anything is switched on.</p>
+    </div>
+    <div class="price-grid">
+      <div class="price-card">
+        <h3>We set it all up for you</h3>
+        <ul>
+          <li>Your menu and prices loaded</li>
+          <li>Your name, logo colours and bot voice</li>
+          <li>WhatsApp bot on your business number</li>
+          <li>Till, kitchen board and sales screen</li>
+          <li>Staff sign-ins</li>
+          <li>Training for you and your staff</li>
+          <li>"Order ready" WhatsApp messages</li>
+          <li>Help when you need it</li>
+        </ul>
+        <div><a class="btn btn-wa wa-link" href="#contact" data-msg="Hi! Please send me a KWING quote for my shop.">Ask for a quote on WhatsApp</a></div>
+      </div>
+      <div class="price-side">
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <h3>Till only? Even simpler.</h3>
+          <p>Don't need the WhatsApp bot yet? Start with the till, kitchen board and sales, and switch WhatsApp on later.</p>
+        </div>
+        <div class="costs">
+          <b>Good to know</b>
+          <span>WhatsApp charges small message fees through Meta. We explain them in your quote.</span>
+          <span>You need internet (Wi-Fi or data) for orders to come through.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" aria-labelledby="faq-title" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head"><div><p class="eyebrow">Questions</p><h2 id="faq-title">Straight answers.</h2></div></div>
+    <div class="faq">
+      <details><summary>Do I need a new phone number?</summary><p>The bot needs a number that isn't on the normal WhatsApp app. Many shops get a cheap new SIM for orders, or move their existing business number over. We'll help you choose.</p></details>
+      <details><summary>Does the bot understand slang and isiZulu?</summary><p>Yes. It replies in the language the customer uses, and in your shop's voice. It never makes up items or prices: it only sells what's on your menu and not marked sold out.</p></details>
+      <details><summary>What if a customer changes their mind?</summary><p>The bot always reads back the order and total and waits for a clear "yes" before placing it. Changes after that go to a staff member, the same as a phone call.</p></details>
+      <details><summary>Can it take card payments?</summary><p>KWING records whether an order was paid by cash, card or EFT and what's still unpaid. Customers pay at the counter or on delivery with your usual card machine.</p></details>
+      <details><summary>Who owns my customer data?</summary><p>You do. Your orders and customers' numbers are kept in your own database, not shared with other shops. We help you follow POPIA.</p></details>
+      <details><summary>What happens when the internet goes down?</summary><p>KWING needs internet to save orders and receive WhatsApp messages. When the connection comes back, the board catches up by itself.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final" id="contact" aria-labelledby="final-title">
+  <img loading="lazy" src="https://images.unsplash.com/photo-1687422808278-d17b09489ed1?auto=format&fit=crop&w=2000&q=78" alt="A smiling worker in a white coat holding a phone in a tiled kitchen">
+  <div class="wrap">
+    <p class="eyebrow" style="color:var(--mustard)">Ready when you are</p>
+    <h2 id="final-title">Let your phone take the <span class="sign">orders</span>.</h2>
+    <p>Send us a WhatsApp with your shop's name and what you sell. We'll show you KWING working with your own menu.</p>
+    <a class="btn btn-wa wa-link" href="#contact" data-msg="Hi! I'd like to see KWING working with my shop's menu.">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.1.6a2.6 2.6 0 0 0 1.7-1.2 2.1 2.1 0 0 0 .2-1.2c-.1-.1-.3-.2-.5-.3Z"/></svg>
+      WhatsApp us</a>
+    <p class="wa-number" style="font-size:15px;color:#C9D6CE" hidden></p>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="yr">2026</span> KWING · Made in South Africa · <a href="https://cpa360sa-cyber.github.io/kwing-pos/">Staff sign-in</a></span>
+    <span>Photos on <a href="https://unsplash.com/?utm_source=kwing&amp;utm_medium=referral">Unsplash</a> by
+      <a href="https://unsplash.com/@mkumbwajr?utm_source=kwing&amp;utm_medium=referral">@mkumbwajr</a>,
+      <a href="https://unsplash.com/@divaris?utm_source=kwing&amp;utm_medium=referral">@divaris</a>,
+      <a href="https://unsplash.com/@e_g_e_photographie?utm_source=kwing&amp;utm_medium=referral">@e_g_e_photographie</a> and
+      <a href="https://unsplash.com/@joshuakettle?utm_source=kwing&amp;utm_medium=referral">@joshuakettle</a>.
+      Chat and order examples are illustrations.</span>
+  </div>
+</footer>
+
+<script>
+/* Sales WhatsApp number, digits only with country code, e.g. 27821234567. */
+const WHATSAPP_NUMBER = "27795524163";
+
+document.getElementById("yr").textContent = new Date().getFullYear();
+if (WHATSAPP_NUMBER){
+  document.querySelectorAll(".wa-link").forEach(a => {
+    a.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(a.dataset.msg || "Hi! I'd like to know more about KWING.")}`;
+    a.target = "_blank"; a.rel = "noopener";
+  });
+  const n = document.querySelector(".wa-number");
+  n.textContent = "Or save our number: +" + WHATSAPP_NUMBER.replace(/^27(\d{2})(\d{3})(\d{4})$/, "27 $1 $2 $3");
+  n.hidden = false;
+}
+</script>
+</body>
+</html>
