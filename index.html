@@ -179,6 +179,21 @@ section{padding-block:clamp(64px,9vw,112px)}
 .dev-soon{margin-top:16px;color:var(--muted);font-size:14.5px;font-weight:600}
 
 /* Pricing */
+.plans{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;align-items:stretch}
+.plan{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:26px 24px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.plan h3{font-size:30px}
+.plan-main{border:2px solid var(--ink);box-shadow:8px 8px 0 var(--mustard)}
+.plan-price{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.plan-price strong{font-family:var(--f-display);font-weight:400;font-size:52px;line-height:1}
+.plan-price span{color:var(--muted);font-weight:700}
+.plan-dep{font-weight:700;font-size:14.5px}
+.plan ul{margin:4px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px;font-size:15px;flex:1}
+.plan li{display:flex;gap:8px}
+.plan li::before{content:"✓";color:var(--green);font-weight:800}
+.plan-after{font-size:13.5px;color:var(--muted);border-top:1px dashed var(--line);padding-top:10px}
+.plan .btn{align-self:flex-start}
+.plan-notes{margin-top:18px;display:flex;flex-direction:column;gap:6px;color:var(--muted);font-size:15px;max-width:80ch}
+.plan-notes b{color:var(--ink)}
 .price-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:20px;align-items:stretch}
 .price-card{background:var(--surface);border:2px solid var(--ink);border-radius:var(--r);padding:28px;display:flex;flex-direction:column;gap:18px}
 .price-card h3{font-size:32px}
@@ -218,7 +233,7 @@ footer a{color:var(--muted)}
   .steps{grid-template-columns:repeat(2,minmax(0,1fr))}
   .feats{grid-template-columns:minmax(0,1fr)}
   .devs{grid-template-columns:repeat(3,minmax(0,1fr))}
-  .band-grid,.price-grid,.faq{grid-template-columns:minmax(0,1fr)}
+  .band-grid,.price-grid,.faq,.plans{grid-template-columns:minmax(0,1fr)}
   .band img{min-height:320px;max-height:420px}
   .wall{grid-template-columns:repeat(6,minmax(0,1fr));grid-auto-rows:150px}
   .t1{grid-column:span 6;grid-row:span 2}.t2,.t3{grid-column:span 3;grid-row:span 2}.t4{grid-column:span 6;grid-row:span 1}
@@ -451,37 +466,59 @@ footer a{color:var(--muted)}
 <section id="pricing" aria-labelledby="price-title">
   <div class="wrap">
     <div class="sec-head">
-      <div><p class="eyebrow">Pricing</p><h2 id="price-title">A once-off setup, then a monthly fee.</h2></div>
-      <p>Every shop is different, so we give you a quote after a quick chat. You'll know exactly what you pay before anything is switched on.</p>
+      <div><p class="eyebrow">Pricing</p><h2 id="price-title">Devices included. One monthly fee.</h2></div>
+      <p>We bring the devices, install everything and keep it running. You pay a small deposit and then one monthly fee by debit order. After 24 months the devices are yours and the fee drops.</p>
     </div>
-    <div class="price-grid">
-      <div class="price-card">
-        <h3>We set it all up for you</h3>
+    <div class="plans">
+      <article class="plan">
+        <p class="eyebrow">For counters &amp; spazas</p>
+        <h3>Till</h3>
+        <p class="plan-price"><strong class="num">R1 150</strong><span>/ month</span></p>
+        <p class="plan-dep">R500 deposit · 24 months</p>
         <ul>
-          <li>Your menu and prices loaded</li>
-          <li>Your name, logo colours and bot voice</li>
-          <li>WhatsApp bot on your business number</li>
-          <li>Till, kitchen board and sales screen</li>
-          <li>Staff sign-ins</li>
-          <li>Training for you and your staff</li>
-          <li>"Order ready" WhatsApp messages</li>
-          <li>Yoco card &amp; EFT pay links</li>
-          <li>Extra branches when you grow</li>
-          <li>Help when you need it</li>
+          <li>Till tablet on a stand</li>
+          <li>Receipt printer</li>
+          <li>Cash drawer</li>
+          <li>Till, sales and menu screens</li>
+          <li>Kitchen tickets on paper</li>
         </ul>
-        <div><a class="btn btn-wa wa-link" href="#contact" data-msg="Hi! Please send me a KWING quote for my shop.">Ask for a quote on WhatsApp</a></div>
-      </div>
-      <div class="price-side">
-        <div style="display:flex;flex-direction:column;gap:10px">
-          <h3>Till only? Even simpler.</h3>
-          <p>Don't need the WhatsApp bot yet? Start with the till, kitchen board and sales, and switch WhatsApp on later.</p>
-        </div>
-        <div class="costs">
-          <b>Good to know</b>
-          <span>WhatsApp charges small message fees through Meta. We explain them in your quote.</span>
-          <span>You need internet (Wi-Fi or data) for orders to come through.</span>
-        </div>
-      </div>
+        <p class="plan-after">From month 25: R750 / month</p>
+        <a class="btn btn-ghost wa-link" href="#contact" data-msg="Hi! I'm interested in the KWING Till package (R1 150/month).">Choose Till</a>
+      </article>
+      <article class="plan plan-main">
+        <p class="eyebrow">Best for takeaways</p>
+        <h3>Full Kitchen</h3>
+        <p class="plan-price"><strong class="num">R2 000</strong><span>/ month</span></p>
+        <p class="plan-dep">R1 000 deposit · 24 months</p>
+        <ul>
+          <li>Everything in Till</li>
+          <li>Kitchen screen on the wall</li>
+          <li>WhatsApp ordering bot on your number</li>
+          <li>"Order ready" WhatsApp messages</li>
+          <li>Backup internet (LTE router + data)</li>
+          <li>Backup power for the router</li>
+        </ul>
+        <p class="plan-after">From month 25: R1 300 / month</p>
+        <a class="btn btn-wa wa-link" href="#contact" data-msg="Hi! I'm interested in the KWING Full Kitchen package (R2 000/month).">Choose Full Kitchen</a>
+      </article>
+      <article class="plan">
+        <p class="eyebrow">For franchises</p>
+        <h3>Extra Branch</h3>
+        <p class="plan-price"><strong class="num">R1 750</strong><span>/ month per shop</span></p>
+        <p class="plan-dep">R500 deposit · 24 months</p>
+        <ul>
+          <li>Full Kitchen devices for each extra shop</li>
+          <li>Same menu and WhatsApp number</li>
+          <li>Branch's own stock, prices and kitchen board</li>
+          <li>Head office sees every branch's sales</li>
+        </ul>
+        <p class="plan-after">From month 25: R1 100 / month</p>
+        <a class="btn btn-ghost wa-link" href="#contact" data-msg="Hi! I have more than one shop and I'm interested in KWING for my branches.">Talk to us about branches</a>
+      </article>
+    </div>
+    <div class="plan-notes">
+      <p><b>Every package includes</b> installation, your menu and branding loaded, staff sign-ins, training, support and updates, and Yoco card &amp; EFT pay links.</p>
+      <p>Prices exclude VAT. Card payments go through your own Yoco account, and Yoco's fees apply. Fair use for WhatsApp orders is up to 500 a month. You need Wi-Fi or mobile data for orders to come through.</p>
     </div>
   </div>
 </section>
@@ -494,6 +531,8 @@ footer a{color:var(--muted)}
       <details><summary>Do I need a new phone number?</summary><p>The bot needs a number that isn't on the normal WhatsApp app. Many shops get a cheap new SIM for orders, or move their existing business number over. We'll help you choose.</p></details>
       <details><summary>Does the bot understand slang and isiZulu?</summary><p>Yes. It replies in the language the customer uses, and in your shop's voice. It never makes up items or prices: it only sells what's on your menu and not marked sold out.</p></details>
       <details><summary>What if a customer changes their mind?</summary><p>The bot always reads back the order and total and waits for a clear "yes" before placing it. Changes after that go to a staff member, the same as a phone call.</p></details>
+      <details><summary>Who owns the devices?</summary><p>We buy the devices and lend them to you for the 24-month contract. Your monthly fee pays them off, and after 24 months they're yours and the fee drops. If a device breaks from normal use, we fix or swap it. Damage, loss and theft are your responsibility, so add the devices to your business insurance.</p></details>
+      <details><summary>Can I cancel before 24 months?</summary><p>Yes. Either return the devices in working order and pay what's still owed on them, or keep the devices and settle that amount. Your quote shows exactly what you'd owe each month.</p></details>
       <details><summary>Can it print receipts?</summary><p>Yes. Connect a small thermal printer (58 or 80 mm, Bluetooth or USB) to print customer slips and kitchen tickets after every sale, and open a cash drawer on cash sales. VAT-registered shops can print tax invoices.</p></details>
       <details><summary>Can it take card payments?</summary><p>Yes. With a Yoco account, customers pay by card or instant EFT through a QR code at the till or a link on WhatsApp, and the order is marked paid by itself. You can also keep using your usual card machine (Yoco, iKhokha or SnapScan) and tap "Card" on the till.</p></details>
       <details><summary>I have more than one shop. Does it work?</summary><p>Yes. Head office sets one menu, and customers use one WhatsApp number. The bot asks which branch they're collecting from, and each branch gets its own kitchen board, stock and prices. Owners see sales for every branch.</p></details>
