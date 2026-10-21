@@ -170,6 +170,14 @@ section{padding-block:clamp(64px,9vw,112px)}
 .band-copy li{display:flex;gap:10px}
 .band-copy li::before{content:"";flex:none;width:10px;height:10px;margin-top:8px;background:var(--mustard)}
 
+/* Devices */
+.devs{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+.dev{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px 18px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.dev svg{width:44px;height:44px;fill:none;stroke:var(--green);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;background:color-mix(in srgb,var(--mustard) 28%,transparent);border-radius:10px;padding:6px}
+.dev h3{font-size:20px}
+.dev p{color:var(--muted);font-size:14.5px}
+.dev-soon{margin-top:16px;color:var(--muted);font-size:14.5px;font-weight:600}
+
 /* Pricing */
 .price-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:20px;align-items:stretch}
 .price-card{background:var(--surface);border:2px solid var(--ink);border-radius:var(--r);padding:28px;display:flex;flex-direction:column;gap:18px}
@@ -209,6 +217,7 @@ footer a{color:var(--muted)}
   .sec-head{grid-template-columns:minmax(0,1fr)}
   .steps{grid-template-columns:repeat(2,minmax(0,1fr))}
   .feats{grid-template-columns:minmax(0,1fr)}
+  .devs{grid-template-columns:repeat(3,minmax(0,1fr))}
   .band-grid,.price-grid,.faq{grid-template-columns:minmax(0,1fr)}
   .band img{min-height:320px;max-height:420px}
   .wall{grid-template-columns:repeat(6,minmax(0,1fr));grid-auto-rows:150px}
@@ -223,6 +232,7 @@ footer a{color:var(--muted)}
   .wa-msgs{min-height:0}
   .steps{grid-template-columns:minmax(0,1fr)}
   .wall{grid-template-columns:minmax(0,1fr);grid-auto-rows:220px}
+  .devs{grid-template-columns:minmax(0,1fr)}
   .t1,.t2,.t3,.t4{grid-column:auto;grid-row:auto}
   .price-card ul{grid-template-columns:minmax(0,1fr)}
   .hero-cta .btn{width:100%;justify-content:center}
@@ -238,6 +248,7 @@ footer a{color:var(--muted)}
     <nav class="nav-links" aria-label="Main">
       <a href="#how">How it works</a>
       <a href="#features">What you get</a>
+      <a href="#devices">Devices</a>
       <a href="#pricing">Pricing</a>
       <a href="#faq">Questions</a>
       <a class="btn btn-wa wa-link" href="#contact" data-msg="Hi! I'd like to know more about KWING for my shop.">Get KWING</a>
@@ -260,7 +271,7 @@ footer a{color:var(--muted)}
           Get KWING for your shop</a>
         <a class="btn btn-ghost" href="#how">See how it works</a>
       </div>
-      <div class="hero-proof"><span>No new hardware</span><span>Works on your phone or tablet</span><span>Prices in rand</span></div>
+      <div class="hero-proof"><span>Works on your phone or tablet</span><span>Card &amp; EFT with Yoco</span><span>One shop or many branches</span></div>
     </div>
 
     <div class="demo" aria-label="Example: a customer orders on WhatsApp and the order lands on the kitchen board">
@@ -364,6 +375,30 @@ footer a{color:var(--muted)}
         <div class="snip" aria-hidden="true"><div class="row"><span>#1043 · Sipho</span><span class="pill" style="background:var(--wa-bar);color:#fff;border-color:transparent">Sent on WhatsApp</span></div></div>
       </article>
       <article class="feat">
+        <h3>Card &amp; EFT with Yoco</h3>
+        <p>Show a QR code at the till, or let the WhatsApp bot send a pay link. The customer pays on their phone and the order turns "Paid" by itself.</p>
+        <div class="snip" aria-hidden="true">
+          <div class="row"><span>#1043 · R98</span><span class="pill" style="background:var(--ok);color:#fff;border-color:transparent">Paid ✓</span></div>
+          <div class="row"><span>Card · instant EFT</span><span class="mono">pay.yoco.com</span></div>
+        </div>
+      </article>
+      <article class="feat">
+        <h3>Many branches, one brand</h3>
+        <p>One menu from head office, one WhatsApp number. The bot asks which branch, and each branch runs its own kitchen board, stock and prices.</p>
+        <div class="snip" aria-hidden="true">
+          <div class="row"><span>Mutton Bunny · Pimville</span><span class="pill out">Sold out</span></div>
+          <div class="row"><span>Mutton Bunny · Rosebank</span><span class="pill">In stock</span></div>
+        </div>
+      </article>
+      <article class="feat">
+        <h3>Head office view</h3>
+        <p>Owners see every branch's takings side by side. Branch staff only see their own branch's orders.</p>
+        <div class="snip" aria-hidden="true">
+          <div class="row"><span>Pimville</span><span class="mono num">R4 120</span></div><div class="bar"><i style="width:100%"></i></div>
+          <div class="row"><span>Rosebank</span><span class="mono num">R2 870</span></div><div class="bar"><i style="width:70%"></i></div>
+        </div>
+      </article>
+      <article class="feat">
         <h3>Your shop, your look</h3>
         <p>Your name, your colours and your menu. The bot talks in your shop's voice, whether that's kasi slang or polite and simple.</p>
         <div class="snip" aria-hidden="true"><div class="row"><span style="font-family:var(--f-display);font-size:22px;letter-spacing:.5px">MAMA'S <span class="sign">GRILL</span></span><span class="pill">Your brand</span></div></div>
@@ -377,7 +412,7 @@ footer a{color:var(--muted)}
   <div class="band-grid">
     <img loading="lazy" src="https://images.unsplash.com/photo-1687422808248-f807f4ea2a2e?auto=format&fit=crop&w=1400&q=78" alt="A vendor in a blue apron checking orders on his phone at his food counter">
     <div class="band-copy">
-      <p class="eyebrow" style="color:var(--mustard)">No new hardware</p>
+      <p class="eyebrow" style="color:var(--mustard)">Start with what you have</p>
       <h2 id="band-title">Runs on the phone already in your pocket.</h2>
       <ul>
         <li>Works in the browser on any smartphone, tablet or laptop</li>
@@ -386,6 +421,29 @@ footer a{color:var(--muted)}
         <li>Your customers' details stay in your own database</li>
       </ul>
     </div>
+  </div>
+</section>
+
+<!-- DEVICES -->
+<section id="devices" aria-labelledby="dev-title">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="eyebrow">Recommended devices</p><h2 id="dev-title">Everything a busy counter needs.</h2></div>
+      <p>Most shops already have half of this. We'll tell you what to buy, and nothing you don't need.</p>
+    </div>
+    <div class="devs">
+      <article class="dev"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="8" y="5" width="32" height="38" rx="4"/><circle cx="24" cy="38" r="1.6"/></svg>
+        <h3>Tablet or smartphone</h3><p>Your till. Any recent Android tablet or phone with Chrome, on a stand at the counter.</p></article>
+      <article class="dev"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="5" y="9" width="38" height="24" rx="3"/><path d="M18 40h12M24 33v7"/></svg>
+        <h3>Kitchen screen</h3><p>A second cheap tablet or an old phone on the wall, so the cooks see every new order.</p></article>
+      <article class="dev"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="12" y="4" width="24" height="40" rx="4"/><rect x="16" y="9" width="16" height="11" rx="1.5"/><path d="M17 27h4M27 27h4M17 33h4M27 33h4"/></svg>
+        <h3>Card machine</h3><p>Yoco, iKhokha or SnapScan. Yoco pay links work on the customer's own phone, so no machine is needed for those.</p></article>
+      <article class="dev"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="6" y="26" width="36" height="13" rx="3"/><path d="M14 26 10 12M34 26l4-14M14 32.5h2M20 32.5h2"/></svg>
+        <h3>LTE router</h3><p>With a data SIM on a different network, so orders keep coming when the Wi-Fi or fibre drops.</p></article>
+      <article class="dev"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="6" y="14" width="32" height="20" rx="3"/><path d="M38 21h4v6h-4M24 17l-5 8h6l-5 8"/></svg>
+        <h3>Backup power</h3><p>A small UPS or inverter keeps the router and card machine going through load shedding.</p></article>
+    </div>
+    <p class="dev-soon">Coming soon: Bluetooth receipt printers, cash drawers and barcode scanners.</p>
   </div>
 </section>
 
@@ -407,6 +465,8 @@ footer a{color:var(--muted)}
           <li>Staff sign-ins</li>
           <li>Training for you and your staff</li>
           <li>"Order ready" WhatsApp messages</li>
+          <li>Yoco card &amp; EFT pay links</li>
+          <li>Extra branches when you grow</li>
           <li>Help when you need it</li>
         </ul>
         <div><a class="btn btn-wa wa-link" href="#contact" data-msg="Hi! Please send me a KWING quote for my shop.">Ask for a quote on WhatsApp</a></div>
@@ -434,7 +494,8 @@ footer a{color:var(--muted)}
       <details><summary>Do I need a new phone number?</summary><p>The bot needs a number that isn't on the normal WhatsApp app. Many shops get a cheap new SIM for orders, or move their existing business number over. We'll help you choose.</p></details>
       <details><summary>Does the bot understand slang and isiZulu?</summary><p>Yes. It replies in the language the customer uses, and in your shop's voice. It never makes up items or prices: it only sells what's on your menu and not marked sold out.</p></details>
       <details><summary>What if a customer changes their mind?</summary><p>The bot always reads back the order and total and waits for a clear "yes" before placing it. Changes after that go to a staff member, the same as a phone call.</p></details>
-      <details><summary>Can it take card payments?</summary><p>KWING records whether an order was paid by cash, card or EFT and what's still unpaid. Customers pay at the counter or on delivery with your usual card machine.</p></details>
+      <details><summary>Can it take card payments?</summary><p>Yes. With a Yoco account, customers pay by card or instant EFT through a QR code at the till or a link on WhatsApp, and the order is marked paid by itself. You can also keep using your usual card machine (Yoco, iKhokha or SnapScan) and tap "Card" on the till.</p></details>
+      <details><summary>I have more than one shop. Does it work?</summary><p>Yes. Head office sets one menu, and customers use one WhatsApp number. The bot asks which branch they're collecting from, and each branch gets its own kitchen board, stock and prices. Owners see sales for every branch.</p></details>
       <details><summary>Who owns my customer data?</summary><p>You do. Your orders and customers' numbers are kept in your own database, not shared with other shops. We help you follow POPIA.</p></details>
       <details><summary>What happens when the internet goes down?</summary><p>KWING needs internet to save orders and receive WhatsApp messages. When the connection comes back, the board catches up by itself.</p></details>
     </div>
